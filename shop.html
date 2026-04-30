@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimitras Oil - Κατάστημα</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --cypress-green: #243b31; --olive-green: #9e8a21; --olive-light: #c2aa34;
+            --warm-brown: #8b4513; --white: #fff7ee; --bg-dark: #2a2420; 
+            --header-bg: #3b322c; --strong-border: 4px solid #110e0c; 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Comic Neue', cursive; }
+        body { background-color: var(--bg-dark); color: var(--white); line-height: 1.6; overflow-x: hidden; text-align: center; }
+
+        #olive-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.4; }
+
+        header { position: sticky; top: 0; z-index: 100; background-color: var(--header-bg); border-bottom: var(--strong-border); box-shadow: 0 6px 0px rgba(0, 0, 0, 0.4); padding-bottom: 15px; }
+        .header-top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: 100%; padding: 15px 5% 10px 5%; }
+        .lang-wrapper { justify-self: start; padding-left: 15px; }
+        .logo-wrapper { justify-self: center; }
+        .hamburger-wrapper { justify-self: end; padding-right: 15px; }
+
+        .lang-toggle { cursor: pointer; font-weight: 700; color: var(--olive-light); border: 2px solid #110e0c; padding: 6px 14px; border-radius: 12px; font-size: 1.1rem; box-shadow: 3px 3px 0px #110e0c; background: var(--bg-dark); transition: all 0.2s; display: inline-block; }
+        .lang-toggle:hover { background: var(--olive-green); color: white; box-shadow: 4px 4px 0px #110e0c, 0 0 15px var(--olive-light); transform: translateY(-2px); }
+
+        .logo-img { height: 75px; width: 75px; border-radius: 50%; border: var(--strong-border); box-shadow: 4px 4px 0px var(--olive-green); transition: transform 0.2s; display: block; }
+        .logo-img:hover { transform: scale(1.1) rotate(-10deg); }
+
+        .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; padding: 10px; border: 3px solid transparent; border-radius: 10px; }
+        .hamburger span { width: 35px; height: 5px; background-color: var(--olive-light); border-radius: 5px; transition: all 0.3s ease; }
+
+        nav ul { list-style: none; display: flex; gap: 20px; align-items: center; justify-content: center; margin-top: 5px; }
+        nav ul li a { text-decoration: none; color: var(--white); font-weight: 700; font-size: 1.2rem; padding: 5px 15px; border-radius: 15px; transition: all 0.2s; }
+        nav ul li a:hover, nav ul li a.active { color: var(--bg-dark); background-color: var(--olive-light); border: 2px solid #110e0c; box-shadow: 3px 3px 0px #110e0c; }
+
+        .shop-section { padding: 60px 5%; min-height: calc(100vh - 170px); position: relative; z-index: 10; }
+        .shop-header { text-align: center; margin-bottom: 50px; }
+        .shop-header h1 { font-size: 3.5rem; color: var(--olive-light); margin-bottom: 15px; text-shadow: 3px 3px 0px #110e0c, 6px 6px 0px rgba(0,0,0,0.3); font-weight: 700; }
+        .shop-header p { font-size: 1.3rem; font-weight: 700; color: #dfcec3; max-width: 800px; margin: 0 auto; }
+
+        /* --- ΝΕΟ ΚΟΥΤΙ ΠΡΟΣΦΟΡΑΣ --- */
+        .special-price-box { background-color: var(--olive-light); color: #110e0c; max-width: 800px; margin: 0 auto 50px auto; padding: 20px; border-radius: 20px; border: var(--strong-border); box-shadow: 8px 8px 0px #110e0c; display: flex; align-items: center; justify-content: center; gap: 15px; font-weight: 700; font-size: 1.3rem; }
+
+        .products-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; max-width: 1200px; margin: 0 auto; }
+
+        .product-card { background-color: #e6d4c5; color: #110e0c; border: var(--strong-border); border-radius: 25px; padding: 25px; width: 100%; max-width: 350px; box-shadow: 10px 10px 0px var(--olive-green); display: flex; flex-direction: column; align-items: center; justify-content: space-between; transition: all 0.2s ease-in-out; }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 14px 14px 0px var(--warm-brown); }
+
+        .product-image { width: 100%; height: auto; border-radius: 15px; border: 3px solid #110e0c; margin-bottom: 20px; object-fit: cover; box-shadow: 4px 4px 0px #110e0c; background: #fff; }
+
+        .product-title { color: #110e0c; font-size: 1.8rem; margin-bottom: 10px; font-weight: 700; text-shadow: 1px 1px 0px var(--white); }
+        .product-desc { color: #3b322c; font-size: 1.1rem; margin-bottom: 20px; font-weight: 700; min-height: 80px; }
+        .product-price { font-size: 2.5rem; color: #110e0c; font-weight: 700; margin-bottom: 25px; text-shadow: 2px 2px 0px var(--white); }
+
+        .buy-btn { 
+            display: inline-block; background-color: var(--olive-green); color: var(--white); 
+            padding: 12px 30px; border-radius: 30px; text-decoration: none; font-size: 1.2rem; font-weight: 700; 
+            border: var(--strong-border); box-shadow: 6px 6px 0px #110e0c, 0 0 15px rgba(194, 170, 52, 0.4); 
+            transition: all 0.2s ease-in-out; cursor: pointer; width: 100%; 
+        }
+        .buy-btn:hover { transform: translateY(-4px); box-shadow: 10px 10px 0px #110e0c, 0 0 25px rgba(194, 170, 52, 0.9); background-color: var(--olive-light); color: #110e0c; }
+        .buy-btn:active { transform: translateY(4px) translateX(4px); box-shadow: 0px 0px 0px #110e0c; }
+
+        @media (max-width: 768px) {
+            .lang-wrapper { padding-left: 0; }
+            .lang-toggle { font-size: 0.9rem; padding: 5px 8px; }
+            .hamburger { display: flex; }
+            nav { position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--header-bg); border-bottom: var(--strong-border); box-shadow: 0 10px 0px rgba(0,0,0,0.5); max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out; }
+            nav.open { max-height: 400px; padding: 20px 0; }
+            nav ul { flex-direction: column; gap: 15px; margin-top: 0; }
+            nav ul li a { display: block; width: 200px; margin: 0 auto; }
+            .shop-header h1 { font-size: 2.5rem; } 
+            .special-price-box { font-size: 1.1rem; flex-direction: column; text-align: center; margin-bottom: 30px; }
+        }
+
+        footer { text-align: center; padding: 30px 20px; background-color: var(--header-bg); border-top: var(--strong-border); box-shadow: 0 -4px 0px rgba(0,0,0,0.3); position: relative; z-index: 10; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <canvas id="olive-canvas"></canvas>
+
+    <header>
+        <div class="header-top">
+            <div class="lang-wrapper">
+                <div class="lang-toggle" id="lang-toggle">GR / EN</div>
+            </div>
+            <div class="logo-wrapper">
+                <a href="index.html"><img src="1399.png" alt="Λογότυπο Dimitras Oil" class="logo-img"></a>
+            </div>
+            <div class="hamburger-wrapper">
+                <div class="hamburger" id="hamburger-menu"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+        <nav id="nav-menu">
+            <ul>
+                <li><a href="index.html" data-el="Αρχική" data-en="Home">Αρχική</a></li>
+                <li><a href="about.html" data-el="Ποιοι Είμαστε" data-en="About Us">Ποιοι Είμαστε</a></li>
+                <li><a href="shop.html" class="active" data-el="Κατάστημα" data-en="Shop">Κατάστημα</a></li>
+                <li><a href="contact.html" data-el="Επικοινωνία" data-en="Contact">Επικοινωνία</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="shop-section">
+        <div class="shop-header">
+            <h1 data-el="Τα Προϊόντα Μας" data-en="Our Products">Τα Προϊόντα Μας</h1>
+            <p data-el="Αυθεντικό, Εξαιρετικά Παρθένο Ελαιόλαδο παραγωγής μας. Επιλέξτε τη συσκευασία που ταιριάζει στις ανάγκες σας και στείλτε μας την παραγγελία σας." data-en="Authentic, Extra Virgin Olive Oil of our own production. Choose the packaging that suits your needs and send us your order.">Αυθεντικό, Εξαιρετικά Παρθένο Ελαιόλαδο παραγωγής μας. Επιλέξτε τη συσκευασία που ταιριάζει στις ανάγκες σας και στείλτε μας την παραγγελία σας.</p>
+        </div>
+
+        <div class="special-price-box">
+            <i class="fas fa-star" style="font-size: 1.5rem;"></i>
+            <span data-el="Για πολύτεκνους και εστίαση η τιμή θα είναι στα 5.5€ / Κιλό" data-en="Special Price for large families and catering: 5.5€ / Kilo">Για πολύτεκνους και εστίαση η τιμή θα είναι στα 5.5€ / Κιλό</span>
+            <i class="fas fa-star" style="font-size: 1.5rem;"></i>
+        </div>
+
+        <div class="products-grid">
+            
+            <div class="product-card">
+                <img src="oliveoil-1l.png" alt="Εξαιρετικό Παρθένο Ελαιόλαδο 1 Κιλό" class="product-image">
+                <h2 class="product-title" data-el="Γυάλινη Φιάλη - 1 Κιλό" data-en="Glass Bottle - 1 Kilo">Γυάλινη Φιάλη - 1 Κιλό</h2>
+                <p class="product-desc" data-el="Πολυτελής συσκευασία, ιδανική για δώρο ή για να ομορφύνει το καθημερινό σας τραπέζι. Εξαιρετική ποιότητα σε κάθε σταγόνα." data-en="Luxury packaging, ideal for a gift or to beautify your daily table. Excellent quality in every drop.">Πολυτελής συσκευασία, ιδανική για δώρο ή για να ομορφύνει το καθημερινό σας τραπέζι. Εξαιρετική ποιότητα σε κάθε σταγόνα.</p>
+                <div class="product-price">7€</div>
+                <a href="contact.html" class="buy-btn" data-el="<i class='fas fa-shopping-basket'></i> Αγόρασε Τώρα" data-en="<i class='fas fa-shopping-basket'></i> Buy Now"><i class="fas fa-shopping-basket"></i> Αγόρασε Τώρα</a>
+            </div>
+
+            <div class="product-card">
+                <img src="oliveoil-5l.png" alt="Εξαιρετικό Παρθένο Ελαιόλαδο 5 Κιλά" class="product-image">
+                <h2 class="product-title" data-el="Μεταλλικό Δοχείο - 5 Κιλά" data-en="Metal Tin - 5 Kilos">Μεταλλικό Δοχείο - 5 Κιλά</h2>
+                <p class="product-desc" data-el="Ο κλασικός, πρακτικός μεταλλικός τενεκές. Η τέλεια και πιο δημοφιλής επιλογή για την κουζίνα και το μαγείρεμα." data-en="The classic, practical metal tin. The perfect and most popular choice for the kitchen and cooking.">Ο κλασικός, πρακτικός μεταλλικός τενεκές. Η τέλεια και πιο δημοφιλής επιλογή για την κουζίνα και το μαγείρεμα.</p>
+                <div class="product-price">35€</div>
+                <a href="contact.html" class="buy-btn" data-el="<i class='fas fa-shopping-basket'></i> Αγόρασε Τώρα" data-en="<i class='fas fa-shopping-basket'></i> Buy Now"><i class="fas fa-shopping-basket"></i> Αγόρασε Τώρα</a>
+            </div>
+
+            <div class="product-card">
+                <img src="oliveoil-17l.png" alt="Εξαιρετικό Παρθένο Ελαιόλαδο 17 Κιλά" class="product-image">
+                <h2 class="product-title" data-el="Μεταλλικό Δοχείο - 17 Κιλά" data-en="Metal Tin - 17 Kilos">Μεταλλικό Δοχείο - 17 Κιλά</h2>
+                <p class="product-desc" data-el="Μεγάλη οικογενειακή συσκευασία. Εξασφαλίζει μέγιστη οικονομία και την καλύτερη δυνατή μακροχρόνια συντήρηση του λαδιού." data-en="Large family size. Ensures maximum economy and the best possible long-term preservation of the oil.">Μεγάλη οικογενειακή συσκευασία. Εξασφαλίζει μέγιστη οικονομία και την καλύτερη δυνατή μακροχρόνια συντήρηση του λαδιού.</p>
+                <div class="product-price">119€</div>
+                <a href="contact.html" class="buy-btn" data-el="<i class='fas fa-shopping-basket'></i> Αγόρασε Τώρα" data-en="<i class='fas fa-shopping-basket'></i> Buy Now"><i class="fas fa-shopping-basket"></i> Αγόρασε Τώρα</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer><p data-el="&copy; 2026 Dimitras Oil. All Rights Reserved." data-en="&copy; 2026 Dimitras Oil. All Rights Reserved.">&copy; 2026 Dimitras Oil. All Rights Reserved.</p></footer>
+
+    <script>
+        let currentLang = 'el';
+        const langToggle = document.getElementById('lang-toggle');
+        langToggle.addEventListener('click', () => {
+            currentLang = currentLang === 'el' ? 'en' : 'el';
+            document.querySelectorAll('[data-el]').forEach(el => {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = el.getAttribute('data-' + currentLang);
+                else el.innerHTML = el.getAttribute('data-' + currentLang);
+            });
+            langToggle.innerText = currentLang === 'el' ? 'GR / EN' : 'EN / GR';
+        });
+
+        const hamburger = document.getElementById('hamburger-menu');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => { navMenu.classList.toggle('open'); });
+
+        const canvas = document.getElementById('olive-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+        const leafColors = ['#556b2f', '#6b8e23', '#808000']; const oliveColors = ['#1a1a1a', '#2b211e'];
+        function init() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; particles = Array.from({ length: 40 }, createParticle); }
+        function createParticle() { const isLeaf = Math.random() > 0.3; return { x: Math.random() * width, y: Math.random() * height - height, size: isLeaf ? Math.random() * 10 + 8 : Math.random() * 7 + 5, speedY: Math.random() * 2.5 + 1, speedX: Math.random() * 2 - 1, angle: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.1, color: isLeaf ? leafColors[Math.floor(Math.random() * leafColors.length)] : oliveColors[Math.floor(Math.random() * oliveColors.length)], type: isLeaf ? 'leaf' : 'olive' }; }
+        function animate() { ctx.clearRect(0, 0, width, height); particles.forEach(p => { p.y += p.speedY; p.x += p.speedX; p.angle += p.spin; if (p.y > height + 20) { Object.assign(p, createParticle()); p.y = -20; } ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.angle); ctx.strokeStyle = '#110e0c'; ctx.lineWidth = 2; ctx.fillStyle = p.color; ctx.beginPath(); if (p.type === 'leaf') ctx.ellipse(0, 0, p.size, p.size/2.5, 0, 0, Math.PI*2); else ctx.ellipse(0, 0, p.size, p.size/1.2, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke(); ctx.restore(); }); requestAnimationFrame(animate); }
+        window.addEventListener('resize', init); init(); animate();
+
+        // --- AUTO SOCIAL MEDIA LINKS ---
+        const socialLinks = {
+            'fa-facebook-f': 'https://www.facebook.com/share/18bVs35WnT/',
+            'fa-instagram': 'https://www.instagram.com/dimitrasoil.gr',
+            'fa-pinterest-p': 'https://pin.it/3Sl5caU99',
+            'fa-tiktok': 'https://www.tiktok.com/@dimitrasoil.gr'
+        };
+        document.querySelectorAll('.social-btn').forEach(btn => {
+            const iconElement = btn.querySelector('i');
+            if (iconElement) {
+                const iconClass = iconElement.className;
+                for (const [iconName, url] of Object.entries(socialLinks)) {
+                    if (iconClass.includes(iconName)) {
+                        btn.href = url;
+                        btn.target = "_blank";
+                        btn.rel = "noopener noreferrer";
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
