@@ -10,71 +10,141 @@
     <style>
         :root {
             --olive-gold: #c2aa34; 
-            --oil-glow: rgba(194, 170, 52, 0.8);
+            --oil-glow: rgba(194, 170, 52, 0.8); /* Premium Λάμψη */
             --white: #fff7ee; 
             --bg-dark: radial-gradient(circle at center, #3b322c 0%, #1a1614 100%);
             --header-bg: #2a2420; 
             --strong-border: 4px solid #110e0c;
-            --olive-green: #9e8a21; --olive-light: #c2aa34; /* Διατήρηση για περιεχόμενο */
+            --olive-green: #9e8a21; --olive-light: #c2aa34;
         }
 
+        /* Η ΓΡΑΜΜΑΤΟΣΕΙΡΑ ΣΟΥ */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Comic Neue', cursive; }
-        body { background: var(--bg-dark); color: var(--white); line-height: 1.6; overflow-x: hidden; text-align: center; }
+        
+        body { 
+            background: var(--bg-dark); 
+            color: var(--white); 
+            line-height: 1.6; 
+            overflow-x: hidden; 
+            text-align: center; 
+        }
+
         #olive-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.4; }
 
+        /* --- ANIMATIONS ΛΑΜΨΗΣ (GLOW) --- */
         @keyframes oilGlow {
             0%, 100% { box-shadow: 0 0 10px 2px var(--oil-glow); }
             50% { box-shadow: 0 0 30px 12px var(--oil-glow); }
         }
 
+        /* --- HEADER: Η ΤΕΛΕΙΑ ΜΠΑΡΑ --- */
         header { 
             position: sticky; top: 0; z-index: 1000; 
             background-color: var(--header-bg); border-bottom: var(--strong-border); 
             box-shadow: 0 6px 0px rgba(0, 0, 0, 0.4); padding-bottom: 12px; 
         }
-        .header-top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: 100%; padding: 12px 3% 8px 3%; }
+
+        .header-top { 
+            display: grid; 
+            grid-template-columns: 1fr auto 1fr; 
+            align-items: center; 
+            width: 100%; 
+            padding: 12px 3% 8px 3%; /* Αέρας στις άκρες */
+        }
+
         .lang-wrapper { justify-self: start; }
         .logo-wrapper { justify-self: center; }
         .hamburger-wrapper { justify-self: end; }
-        .lang-toggle { cursor: pointer; font-weight: 700; color: var(--olive-gold); border: 2px solid #110e0c; padding: 3px 10px; border-radius: 20px; font-size: 0.85rem; box-shadow: 3px 3px 0px #110e0c; background: #1a1614; transition: 0.2s; display: inline-block; }
-        .logo-img { height: 70px; width: 70px; border-radius: 50%; border: var(--strong-border); animation: oilGlow 3s infinite ease-in-out; background: #2a2420; transition: 0.2s; display: block; }
+
+        /* ΜΙΚΡΟ PILL BUTTON ΓΛΩΣΣΑΣ */
+        .lang-toggle { 
+            cursor: pointer; font-weight: 700; color: var(--olive-gold); 
+            border: 2px solid #110e0c; padding: 3px 10px; border-radius: 20px; 
+            font-size: 0.85rem; box-shadow: 3px 3px 0px #110e0c; 
+            background: #1a1614; transition: 0.2s; display: inline-block;
+        }
+        .lang-toggle:hover { transform: translateY(-2px); box-shadow: 4px 4px 0px #110e0c; }
+
+        /* LOGO ΜΠΑΡΑΣ ΜΕ ΛΑΜΨΗ */
+        .logo-img { 
+            height: 70px; width: 70px; 
+            border-radius: 50%; border: var(--strong-border); 
+            animation: oilGlow 3s infinite ease-in-out; 
+            background: #2a2420; transition: 0.2s; display: block; 
+        }
+
+        /* ΚΟΜΨΟ HAMBURGER */
         .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
         .hamburger span { width: 30px; height: 4px; background-color: var(--olive-gold); border-radius: 5px; }
+
         nav ul { list-style: none; display: flex; gap: 20px; align-items: center; justify-content: center; margin-top: 5px; }
         nav ul li a { text-decoration: none; color: var(--white); font-weight: 700; font-size: 1.1rem; padding: 5px 12px; border-radius: 12px; transition: 0.2s; }
         nav ul li a:hover, nav ul li a.active { color: #110e0c; background-color: var(--olive-gold); border: 2px solid #110e0c; box-shadow: 3px 3px 0px #110e0c; }
 
-        /* ΣΤΥΛ ΠΕΡΙΕΧΟΜΕΝΟΥ ΑΠΟ ΤΟ ΑΡΧΙΚΟ ΣΟΥ */
-        .content-section { display: flex; flex-direction: column; padding: 50px 5%; gap: 50px; align-items: center; position: relative; z-index: 10; }
-        .text-column { width: 100%; max-width: 800px; background: #e6d4c5; color: #110e0c; padding: 40px; border-radius: 25px; border: var(--strong-border); box-shadow: 10px 10px 0px var(--olive-green); }
+        /* --- HERO SECTION LAYOUT --- */
+        .hero { position: relative; z-index: 10; padding: 50px 5%; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+        
+        /* ΚΕΝΤΡΙΚΟ LOGO HERO ΜΕ ΛΑΜΨΗ */
+        .hero-logo-main { 
+            width: 210px; max-width: 80%; 
+            border-radius: 50%; border: var(--strong-border);
+            animation: oilGlow 4s infinite ease-in-out;
+            background: #2a2420;
+            margin-bottom: 10px;
+        }
+
+        /* ΠΕΡΙΕΧΟΜΕΝΟ ABOUT */
+        .text-column { width: 100%; max-width: 800px; background: #e6d4c5; color: #110e0c; padding: 40px; border-radius: 25px; border: var(--strong-border); box-shadow: 10px 10px 0px var(--olive-gold); }
         .text-column h1 { color: #110e0c; margin-bottom: 25px; font-size: 3.2rem; text-shadow: 2px 2px 0px var(--white); font-weight: 700; text-transform: uppercase; }
         .text-column p { margin-bottom: 20px; font-size: 1.25rem; font-weight: 700; text-align: center; line-height: 1.6; }
+
+        /* CAROUSEL */
         .carousel-wrapper { position: relative; width: 100%; max-width: 650px; }
         .carousel-container { width: 100%; height: 400px; position: relative; overflow: hidden; border-radius: 25px; border: var(--strong-border); box-shadow: 10px 10px 0px #110e0c; background-color: #000; }
         .carousel-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out; }
         .carousel-slide.active { opacity: 1; position: relative; }
         .prev, .next { cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); width: 55px; height: 55px; background-color: var(--olive-light); color: #110e0c; font-weight: bold; font-size: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 3px solid #110e0c; box-shadow: 4px 4px 0px #110e0c; transition: all 0.2s ease; }
         .prev { left: 15px; } .next { right: 15px; }
+
         .tradition-text { text-align: center; margin-top: 40px; font-weight: 700; color: #dfcec3; font-size: 1.2rem; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; border: 3px dashed var(--olive-light); }
+        
         .social-media { margin-top: 30px; display: flex; gap: 20px; justify-content: center; }
         .social-btn { display: flex; align-items: center; justify-content: center; width: 55px; height: 55px; background-color: var(--olive-light); color: #110e0c; border-radius: 50%; font-size: 1.6rem; text-decoration: none; border: var(--strong-border); box-shadow: 4px 4px 0px #110e0c; transition: all 0.1s ease; }
+
+        /* ΜΠΟΥΚΑΛΙ ΜΕ ΛΑΜΨΗ & ΠΛΕΥΣΗ */
+        .bottle-img { 
+            max-height: 50vh; border-radius: 25px; border: var(--strong-border); 
+            box-shadow: 10px 10px 0 var(--olive-gold);
+            animation: float 4s infinite ease-in-out, oilGlow 4s infinite ease-in-out; 
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         @media (max-width: 768px) {
             nav { position: absolute; top: 100%; left: 0; width: 100%; background: var(--header-bg); border-bottom: var(--strong-border); max-height: 0; overflow: hidden; transition: 0.4s; }
             nav.open { max-height: 450px; padding: 20px 0; }
             nav ul { flex-direction: column; }
             .carousel-container { height: 300px; }
+            .text-column h1 { font-size: 2.2rem; }
         }
-        footer { text-align: center; padding: 30px 20px; background-color: var(--header-bg); border-top: var(--strong-border); position: relative; z-index: 10; }
+        
+        footer { padding: 30px; background: #3b322c; border-top: var(--strong-border); position: relative; z-index: 10; }
     </style>
 </head>
 <body>
+
     <canvas id="olive-canvas"></canvas>
+
     <header>
         <div class="header-top">
-            <div class="lang-wrapper"><div class="lang-toggle" id="lang-toggle">GR / EN</div></div>
-            <div class="logo-wrapper"><a href="index.html"><img src="1399.png" class="logo-img" alt="Logo"></a></div>
-            <div class="hamburger-wrapper"><div class="hamburger" id="hamburger-menu"><span></span><span></span><span></span></div></div>
+            <div class="lang-wrapper">
+                <div class="lang-toggle" id="lang-toggle">GR / EN</div>
+            </div>
+            <div class="logo-wrapper">
+                <a href="index.html"><img src="1399.png" alt="Logo" class="logo-img"></a>
+            </div>
+            <div class="hamburger-wrapper">
+                <div class="hamburger" id="hamburger-menu"><span></span><span></span><span></span></div>
+            </div>
         </div>
         <nav id="nav-menu">
             <ul>
@@ -86,10 +156,12 @@
         </nav>
     </header>
 
-    <main class="content-section">
+    <main class="hero">
+        <img src="1399.png" alt="Dimitras Oil Emblem" class="hero-logo-main">
+
         <div class="text-column">
             <h1 data-el="Η Ιστορία μας" data-en="Our Story">Η Ιστορία μας</h1>
-            <p data-el="Το ελαιοτριβείο μας αποτελεί ζωντανό πυρήνα ποιότητας και παράδοσης από το <strong>1990</strong> στην Αμαλιάδα, στο νομό Ηλείας..." data-en="Our olive mill has been a living core of quality and tradition since <strong>1990</strong> in Amaliada, Ilia...">Το ελαιοτριβείο μας αποτελεί ζωντανό πυρήνα ποιότητας και παράδοσης από το <strong>1990</strong> στην Αμαλιάδα, στο νομό Ηλείας. Οι ελαιώνες της περιοχής μας προέρχονται από την <strong>Κορωνέικη ποικιλία</strong> ελιάς, φημισμένη από αρχαιοτάτων χρόνων για το έντονο άρωμα, την ευχάριστη γεύση και τα πλούσια θρεπτικά στοιχεία της.</p>
+            <p data-el="Το ελαιοτριβείο μας αποτελεί ζωντανό πυρήνα ποιότητας και παράδοσης από το <strong>1990</strong> στην Αμαλιάδα..." data-en="Our olive mill has been a living core of quality and tradition since <strong>1990</strong> in Amaliada...">Το ελαιοτριβείο μας αποτελεί ζωντανό πυρήνα ποιότητας και παράδοσης από το <strong>1990</strong> στην Αμαλιάδα, στο νομό Ηλείας. Οι ελαιώνες της περιοχής μας προέρχονται από την <strong>Κορωνέικη ποικιλία</strong> ελιάς, φημισμένη από αρχαιοτάτων χρόνων για το έντονο άρωμα, την ευχάριστη γεύση και τα πλούσια θρεπτικά στοιχεία της.</p>
             <p data-el="Με σεβασμό στη γη και στους πολύτιμους καρπούς της, παράγουμε με <strong>ψυχρή έκθλιψη</strong>..." data-en="With respect to the land and its precious fruits, we produce extra virgin olive oil via <strong>cold extraction</strong>...">Με σεβασμό στη γη και στους πολύτιμους καρπούς της, παράγουμε με <strong>ψυχρή έκθλιψη</strong>, εντός λίγων ωρών από τη συγκομιδή, έξτρα παρθένο ελαιόλαδο. Τα μηχανήματά μας, τελευταίας τεχνολογίας <strong>PIERALISI HELLAS</strong>, εξασφαλίζουν την άριστη ποιότητά του.</p>
             <p data-el="Η υψηλή ποιότητα και η χαμηλή οξύτητα οφείλονται στην πείρα του ιδιοκτήτη και πατέρα μου, <strong>Διονυσίου Παναγιωτόπουλου</strong>..." data-en="The high quality and low acidity are due to the experience of the owner and my father, <strong>Dionisios Panagiotopoulos</strong>...">Η υψηλή ποιότητα και η χαμηλή οξύτητα οφείλονται στην πείρα του ιδιοκτήτη και πατέρα μου, <strong>Διονυσίου Παναγιωτόπουλου</strong>. Το ελαιοτριβείο μας δεν είναι απλώς ένας χώρος παραγωγής, αλλά μια γέφυρα που ενώνει το παρελθόν με το παρόν. Λειτουργούμε με αυστηρά πρότυπα και διαθέτουμε πιστοποιήσεις <strong>ISO 22000 & ISO 9001</strong>.</p>
         </div>
@@ -108,40 +180,59 @@
         </div>
 
         <div class="tradition-text">
-            <p data-el='"Με το βλέμμα στραμμένο στο μέλλον, συνεχίζουμε την οικογενειακή παράδοση..."' data-en='"Looking to the future, we continue the family tradition..."'>"Με το βλέμμα στραμμένο στο μέλλον, συνεχίζουμε την οικογενειακή παράδοση με το ίδιο πάθος και μεράκι. Δέσμευσή μας είναι να προσφέρουμε πάντα στο τραπέζι σας τον πιο αγνό, τον πιο ποιοτικό υγρό χρυσό της περιοχής μας."</p>
+            <p data-el='"Με το βλέμμα στραμμένο στο μέλλον, συνεχίζουμε την οικογενειακή παράδοση με το ίδιο πάθος και μεράκι..."' data-en='"Looking to the future, we continue the family tradition with the same passion and dedication..."'>"Με το βλέμμα στραμμένο στο μέλλον, συνεχίζουμε την οικογενειακή παράδοση με το ίδιο πάθος και μεράκι. Δέσμευσή μας είναι να προσφέρουμε πάντα στο τραπέζι σας τον πιο αγνό, τον πιο ποιοτικό υγρό χρυσό της περιοχής μας."</p>
         </div>
 
         <div class="social-media">
-            <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-btn"><i class="fab fa-pinterest-p"></i></a>
-            <a href="#" class="social-btn"><i class="fab fa-tiktok"></i></a>
+            <a href="#" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-btn" title="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+            <a href="#" class="social-btn" title="TikTok"><i class="fab fa-tiktok"></i></a>
         </div>
+
+        <img src="1410.png" alt="Bottle" class="bottle-img">
     </main>
 
     <footer><p>© 2026 Dimitras Oil. All Rights Reserved.</p></footer>
 
     <script>
-        document.getElementById('hamburger-menu').addEventListener('click', () => document.getElementById('nav-menu').classList.toggle('open'));
+        // TRANSLATION
         let currentLang = 'el';
-        document.getElementById('lang-toggle').addEventListener('click', () => {
+        const langToggle = document.getElementById('lang-toggle');
+        langToggle.addEventListener('click', () => {
             currentLang = currentLang === 'el' ? 'en' : 'el';
-            document.querySelectorAll('[data-el]').forEach(el => el.innerHTML = el.getAttribute('data-' + currentLang));
-            document.getElementById('lang-toggle').innerText = currentLang === 'el' ? 'GR / EN' : 'EN / GR';
+            document.querySelectorAll('[data-el]').forEach(el => {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = el.getAttribute('data-' + currentLang);
+                else el.innerHTML = el.getAttribute('data-' + currentLang);
+            });
+            langToggle.innerText = currentLang === 'el' ? 'GR / EN' : 'EN / GR';
         });
 
-        // CAROUSEL LOGIC
-        let currentIndex = 0; const slides = document.querySelectorAll('.carousel-slide');
-        function showSlide(index) { slides.forEach(s => s.classList.remove('active')); currentIndex = (index + slides.length) % slides.length; slides[currentIndex].classList.add('active'); }
-        document.getElementById('btnNext').addEventListener('click', () => showSlide(currentIndex + 1));
-        document.getElementById('btnPrev').addEventListener('click', () => showSlide(currentIndex - 1));
-        setInterval(() => showSlide(currentIndex + 1), 4000);
+        // MENU
+        const hamburger = document.getElementById('hamburger-menu');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => { navMenu.classList.toggle('open'); });
+
+        // CAROUSEL
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentIndex = 0; const slides = document.querySelectorAll('.carousel-slide'); const totalSlides = slides.length;
+            if (totalSlides === 0) return;
+            function showSlide(index) { slides.forEach(slide => slide.classList.remove('active')); if (index >= totalSlides) currentIndex = 0; else if (index < 0) currentIndex = totalSlides - 1; else currentIndex = index; slides[currentIndex].classList.add('active'); }
+            document.getElementById('btnNext').addEventListener('click', () => showSlide(currentIndex + 1));
+            document.getElementById('btnPrev').addEventListener('click', () => showSlide(currentIndex - 1));
+            setInterval(() => showSlide(currentIndex + 1), 4000); 
+        });
 
         // CANVAS BACKGROUND
-        const canvas = document.getElementById('olive-canvas'); const ctx = canvas.getContext('2d'); let w, h, p = [];
-        function init() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; p = Array.from({length:40}, () => ({ x: Math.random()*w, y: Math.random()*h, s: Math.random()*8+5, sy: Math.random()*1.5+0.5, a: Math.random()*6, c: Math.random()>0.3?'#6b8e23':'#1a1a1a' })); }
-        function anim() { ctx.clearRect(0,0,w,h); p.forEach(l => { l.y += l.sy; if(l.y > h) l.y = -10; ctx.fillStyle = l.c; ctx.beginPath(); ctx.ellipse(l.x, l.y, l.s, l.s/2, l.a, 0, 7); ctx.fill(); }); requestAnimationFrame(anim); }
-        window.addEventListener('resize', init); init(); anim();
+        const canvas = document.getElementById('olive-canvas'); const ctx = canvas.getContext('2d'); let width, height, particles = [];
+        function init() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; particles = Array.from({ length: 40 }, createParticle); }
+        function createParticle() { const isLeaf = Math.random() > 0.3; return { x: Math.random() * width, y: Math.random() * height - height, size: isLeaf ? Math.random() * 10 + 8 : Math.random() * 7 + 5, speedY: Math.random() * 2.5 + 1, speedX: Math.random() * 2 - 1, angle: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.1, color: isLeaf ? '#6b8e23' : '#1a1a1a', type: isLeaf ? 'leaf' : 'olive' }; }
+        function animate() { ctx.clearRect(0, 0, width, height); particles.forEach(p => { p.y += p.speedY; p.x += p.speedX; p.angle += p.spin; if (p.y > height + 20) { Object.assign(p, createParticle()); p.y = -20; } ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.angle); ctx.strokeStyle = '#110e0c'; ctx.lineWidth = 2; ctx.fillStyle = p.color; ctx.beginPath(); if (p.type === 'leaf') ctx.ellipse(0, 0, p.size, p.size/2.5, 0, 0, Math.PI*2); else ctx.ellipse(0, 0, p.size, p.size/1.2, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke(); ctx.restore(); }); requestAnimationFrame(animate); }
+        window.addEventListener('resize', init); init(); animate();
+
+        // AUTO SOCIAL MEDIA
+        const socialLinks = { 'fa-facebook-f': 'https://www.facebook.com/share/18bVs35WnT/', 'fa-instagram': 'https://www.instagram.com/dimitrasoil.gr', 'fa-pinterest-p': 'https://pin.it/3Sl5caU99', 'fa-tiktok': 'https://www.tiktok.com/@dimitrasoil.gr' };
+        document.querySelectorAll('.social-btn').forEach(btn => { const icon = btn.querySelector('i'); if (icon) { for (const [name, url] of Object.entries(socialLinks)) { if (icon.className.includes(name)) { btn.href = url; btn.target = "_blank"; btn.rel = "noopener noreferrer"; } } } });
     </script>
 </body>
 </html>
